@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Add this HTML code inside the <body> tag of your HTML -->
+
+
+        <div id="hoverIcon" class="collapse-button"><span class="uil--edit"></span></div>
+
+        <div id="gradientSettings" class="gradient-settings">
+
+        <div class="gradients-container">
+
+
+            <div id="headerColorSettings" class="header-color-settings">
+                <div>
+                    <label class="input-label" for="backlogColor">Pending</label>
+                    <input type="color" id="backlogColor" onchange="changeHeaderColor(0)" value="#a2622d">
+                </div>
+                <div>
+                    <label class="input-label" for="progressColor">In Progress</label>
+                    <input type="color" id="progressColor" onchange="changeHeaderColor(1)" value="#1b6161">
+                </div>
+                <div>
+                    <label class="input-label" for="completeColor">Complete</label>
+                    <input type="color" id="completeColor" onchange="changeHeaderColor(2)" value="#248224">
+                </div>
+                <div>
+                    <label class="input-label" for="onHoldColor">On Hold</label>
+                    <input type="color" id="onHoldColor" onchange="changeHeaderColor(3)" value="#a22d22">
+                </div>
+            </div>
+            
+
+
+            <div id="gradientInputs" class="gradient-inputs">
+                <label  class="input-label" for="backlogColor">Background</label>
+                <div style="display: flex; justify-content: center; gap: 5px;">
+                    <input type="color" id="startColor">
+                    <input type="color" id="endColor">
+                </div>
+                <!-- <button onclick="applyCustomGradient()">Apply</button> -->
+            </div>
+
+            
+        </div>
+
+    </div>
+
+
+
+    <!-- <h1 class="main-title">Daily Shift</h1> -->
+    <div class="drag-container">
+        <ul class="drag-list">
+            <!-- Backlog Column -->
+            <li class="drag-column backlog-column">
+                <span class="header">
+                    <h1>Pending</h1>
+                </span>
+                <!-- Backlog Content -->
+                <div id="backlog-content" class="custom-scroll">
+                    <ul class="drag-item-list" id="backlog-list" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        ondragenter="dragEnter(0)"></ul>
+                </div>
+                <!-- Add Button Group -->
+                <div class="add-btn-group">
+                    <div class="add-btn" onclick="showInputBox(0)">
+                        <span class="plus-sign">+</span>
+                        <span>Add Item</span>
+                    </div>
+                    <div class="add-btn solid" onclick="hideInputBox(0)">
+                        <span>Save Item</span>
+                    </div>
+                </div>
+                <div class="add-container">
+                    <div class="add-item" contenteditable="true"></div>
+                </div>
+            </li>
+            <!-- Progress Column -->
+            <li class="drag-column progress-column">
+                <span class="header">
+                    <h1>In Progress</h1>
+                </span>
+                <!-- Progress Content -->
+                <div id="progress-content" class="custom-scroll">
+                    <ul class="drag-item-list" id="progress-list" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        ondragenter="dragEnter(1)"></ul>
+                </div>
+                <!-- Add Button Group -->
+                <div class="add-btn-group">
+                    <div class="add-btn" onclick="showInputBox(1)">
+                        <span class="plus-sign">+</span>
+                        <span>Add Item</span>
+                    </div>
+                    <div class="add-btn solid" onclick="hideInputBox(1)">
+                        <span>Save Item</span>
+                    </div>
+                </div>
+                <div class="add-container">
+                    <div class="add-item" contenteditable="true"></div>
+                </div>
+            </li>
+            <!-- Complete Column -->
+            <li class="drag-column complete-column">
+                <span class="header">
+                    <h1>Complete</h1>
+                </span>
+                <!-- Complete Content -->
+                <div id="complete-content" class="custom-scroll">
+                    <ul class="drag-item-list" id="complete-list" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        ondragenter="dragEnter(2)"></ul>
+                </div>
+                <!-- Add Button Group -->
+                <div class="add-btn-group">
+                    <div class="add-btn" onclick="showInputBox(2)">
+                        <span class="plus-sign">+</span>
+                        <span>Add Item</span>
+                    </div>
+                    <div class="add-btn solid" onclick="hideInputBox(2)">
+                        <span>Save Item</span>
+                    </div>
+                </div>
+                <div class="add-container">
+                    <div class="add-item" contenteditable="true"></div>
+                </div>
+            </li>
+            <!-- On Hold Column -->
+            <li class="drag-column on-hold-column">
+                <span class="header">
+                    <h1>On Hold</h1>
+                </span>
+                <!-- On Hold Content -->
+                <div id="on-hold-content" class="custom-scroll">
+                    <ul class="drag-item-list" id="on-hold-list" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        ondragenter="dragEnter(3)"></ul>
+                </div>
+                <!-- Add Button Group -->
+                <div class="add-btn-group">
+                    <div class="add-btn" onclick="showInputBox(3)">
+                        <span class="plus-sign">+</span>
+                        <span>Add Item</span>
+                    </div>
+                    <div class="add-btn solid" onclick="hideInputBox(3)">
+                        <span>Save Item</span>
+                    </div>
+                </div>
+                <div class="add-container">
+                    <div class="add-item" contenteditable="true"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

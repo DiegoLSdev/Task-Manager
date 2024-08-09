@@ -1,0 +1,460 @@
+/* Trees Image - Pexels: https://www.pexels.com/photo/photo-of-trees-in-forest-3801030/ */
+@import url("https://fonts.googleapis.com/css?family=Quicksand&display=swap");
+
+html {
+  box-sizing: border-box;
+}
+
+:root {
+  --column-1: #a2622d;
+  --column-2: #1b6161;
+  --column-3: #248224;
+  --column-4: #902292;
+}
+
+body {
+  margin: 0;
+  /* background: url("./wood.jpg"); */
+  background-size: cover;
+  background-position: 50% 60%;
+  background-attachment: fixed;
+  color: white;
+  font-family: Quicksand, sans-serif;
+  overflow-y: hidden;
+}
+
+h1 {
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px black;
+}
+
+.main-title {
+  text-align: center;
+  font-size: 3rem;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.drag-container {
+  margin: 20px;
+}
+
+.drag-list {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Columns */
+.drag-column {
+  flex: 1;
+  margin: 0 10px;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  overflow-x: hidden;
+}
+
+.backlog-column .header,
+.backlog-column .solid,
+.backlog-column .solid:hover,
+.backlog-column .over {
+  background-color: var(--column-1);
+}
+
+.progress-column .header,
+.progress-column .solid,
+.progress-column .solid:hover,
+.progress-column .over {
+  background-color: var(--column-2);
+}
+
+.complete-column .header,
+.complete-column .solid,
+.complete-column .solid:hover,
+.complete-column .over {
+  background-color: var(--column-3);
+}
+
+.on-hold-column .header,
+.on-hold-column .solid,
+.on-hold-column .solid:hover,
+.on-hold-column .over {
+  background-color: var(--column-4);
+}
+
+/* Custom Scrollbar */
+
+/*    https://css-tricks.com/the-current-state-of-styling-scrollbars  /*/
+.custom-scroll {
+  overflow-y: auto;
+  max-height: 75vh;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin-right: 5px;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.header h1 {
+  font-size: 1.25rem;
+}
+
+/* Drag and Drop */
+.over {
+  padding: 50px 10px;
+}
+
+.drag-item-list {
+  min-height: 50px;
+}
+
+.drag-item {
+  position: relative;
+  /* Make the item container relatively positioned */
+  margin: 10px;
+  padding: 10px;
+  height: fit-content;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  line-height: 1.5rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  position: absolute;
+  top: 50%;
+  /* Position the button vertically at the center */
+  right: 0;
+  transform: translateY(-50%);
+  /* Adjust the position vertically */
+  padding: 5px;
+  opacity: 0;
+  /* Initially hide the button */
+  transition: opacity 0.3s ease;
+  /* Add a smooth transition */
+}
+
+.drag-item:hover .delete-btn {
+  opacity: 1;
+  /* Show the button on hover */
+}
+
+.delete-btn:hover {
+  color: red;
+  /* Change color on hover */
+}
+
+.drag-item:focus {
+  outline: none;
+  background-color: white;
+  color: black;
+}
+
+/* Add Button Group */
+.add-btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-btn {
+  margin: 10px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: fit-content;
+  border-radius: 5px;
+  transition: all 0.3s ease-in;
+  user-select: none;
+}
+
+.add-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: black;
+}
+
+.add-btn:active {
+  transform: scale(0.97);
+}
+
+.solid {
+  display: none;
+}
+
+.solid:hover {
+  transition: unset;
+  filter: brightness(95%);
+  color: white;
+}
+
+.plus-sign {
+  font-size: 1.5rem;
+  margin-right: 5px;
+  position: relative;
+  top: -3px;
+}
+
+.add-container {
+  margin: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  min-height: 100px;
+  display: none;
+}
+
+.add-item {
+  width: 100%;
+  min-height: 100px;
+  height: auto;
+  background-color: white;
+  border-radius: 10px;
+  margin: 5px auto;
+  resize: none;
+  color: black;
+  padding: 10px;
+}
+
+.add-item:focus {
+  outline: none;
+}
+
+/* Media Query: Laptop */
+@media screen and (max-width: 1800px) {
+  .main-title {
+    font-size: 2rem;
+  }
+}
+
+/* Media Query: Large Smartphone (Vertical) */
+@media screen and (max-width: 600px) {
+  body {
+    overflow-y: auto;
+  }
+
+  .drag-container {
+    margin: 0;
+  }
+
+  .drag-list {
+    display: block;
+  }
+
+  .drag-column {
+    margin: 10px;
+  }
+
+  .gradients-container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    height: 125px;
+
+  }
+
+  .gradient-settings {
+    display: flex;
+    /* position: fixed; */
+    justify-content: center;
+    align-items: center;
+    margin: 8px;
+  }
+
+  #headerColorSettings {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+
+  }
+
+  #headerColorSettings div {
+    /* border: 1px solid yellow; */
+    gap: 8px;
+
+  }
+}
+
+@media screen and (max-width: 246px) {
+  .gradients-container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    height: 170px;
+
+  }
+}
+
+#headerColorSettings div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25px;
+}
+
+.gradients-container {
+  /* border: 1px solid red; */
+  width: 80vw;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+
+}
+
+.gradient-inputs {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+}
+
+.header-color-settings {
+  /* border: 1px solid yellow; */
+  display: flex;
+}
+
+
+label {
+  /* border: 1px solid green; */
+  font-size: 1rem;
+  text-align: center;
+}
+
+
+/* Add this CSS code at the end of your existing stylesheet */
+.gradient-settings {
+  display: none;
+  /* Hide the gradientSettings container by default */
+  position: static;
+  top: 5px;
+  left: 55px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.gradient-settings:hover {
+  display: block;
+  /* Show the gradientSettings container on hover */
+}
+
+.collapse-button {
+  cursor: pointer;
+  display: inline-block;
+  padding-right: 10px;
+  /* Add padding to create space for the arrow symbol */
+}
+
+.collapse-button::after {
+  color: "white";
+  /* Default: ">" symbol */
+}
+
+.collapse-button.open::after {
+  color: "red";
+  /* Change to "V" symbol when open */
+}
+
+
+
+
+
+/* icons */
+
+.icon-park--background-color {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 15px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg fill='none'%3E%3Cpath fill='%23000' fill-rule='evenodd' d='M37 37C39.2091 37 41 35.2091 41 33C41 31.5272 39.6667 29.5272 37 27C34.3333 29.5272 33 31.5272 33 33C33 35.2091 34.7909 37 37 37Z' clip-rule='evenodd'/%3E%3Cpath stroke='%23000' stroke-linecap='round' stroke-width='4' d='M20.8535 5.50439L24.389 9.03993'/%3E%3Cpath stroke='%23000' stroke-linejoin='round' stroke-width='4' d='M23.6818 8.33281L8.12549 23.8892L19.4392 35.2029L34.9955 19.6465L23.6818 8.33281Z'/%3E%3Cpath stroke='%23000' stroke-linecap='round' stroke-width='4' d='M12 20.0732L28.961 25.6496'/%3E%3Cpath stroke='%23000' stroke-linecap='round' stroke-width='4' d='M4 43H44'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.gridicons--dropdown {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m7 10l5 5l5-5z'/%3E%3C/svg%3E");
+}
+
+.fluent--color-background-24-filled {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2 12.414V17.5A2.5 2.5 0 0 0 4.5 20h15a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 19.5 4h-8.944l2.422 2.422a3 3 0 0 1 .719 3.09c.38.042.75.21 1.04.501l.003.002l.003.004l.01.009l.02.02a8 8 0 0 1 .311.338c.192.216.45.525.712.89c.26.36.545.808.77 1.3c.22.478.434 1.106.434 1.799C17 16.23 15.606 18 13.5 18S10 16.23 10 14.375c0-.29.037-.569.097-.83l-1.362 1.362a3 3 0 0 1-4.243 0zm9.342.58c-.188.409-.342.888-.342 1.381C11 15.765 12.029 17 13.5 17c1.47 0 2.5-1.235 2.5-2.625c0-.493-.154-.972-.342-1.381a7 7 0 0 0-.674-1.134a10 10 0 0 0-.649-.812l-.305-.328a.75.75 0 0 0-1.06 0l-.006.005c-.058.062-.214.226-.3.323c-.175.199-.411.48-.649.812a7 7 0 0 0-.673 1.134m2.158-.61q.13.162.265.35c.202.281.392.586.53.886c.14.305.205.56.205.755c0 .691-.481 1.125-1 1.125c-.52 0-1-.434-1-1.125c0-.194.064-.45.205-.755c.137-.3.327-.605.529-.886q.136-.188.266-.35M6.75 1a.75.75 0 0 0-.75.75v1.756l-.093.087l-4.243 4.243a2 2 0 0 0 0 2.828L5.199 14.2a2 2 0 0 0 2.829 0l4.243-4.243a2 2 0 0 0 0-2.828L8.735 3.593A2 2 0 0 0 7.5 3.015V1.75A.75.75 0 0 0 6.75 1M6 5.621v.629a.75.75 0 1 0 1.5 0V4.54a.5.5 0 0 1 .174.114l3.536 3.535c.09.09.138.205.145.322H3.11zm.26 7.518l-3.128-3.128h6.964l-3.129 3.128a.5.5 0 0 1-.707 0'/%3E%3C/svg%3E");
+}
+
+.uil--edit {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  margin-left: 15px;
+  margin-top: 15px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M21 12a1 1 0 0 0-1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h6a1 1 0 0 0 0-2H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-6a1 1 0 0 0-1-1m-15 .76V17a1 1 0 0 0 1 1h4.24a1 1 0 0 0 .71-.29l6.92-6.93L21.71 8a1 1 0 0 0 0-1.42l-4.24-4.29a1 1 0 0 0-1.42 0l-2.82 2.83l-6.94 6.93a1 1 0 0 0-.29.71m10.76-8.35l2.83 2.83l-1.42 1.42l-2.83-2.83ZM8 13.17l5.93-5.93l2.83 2.83L10.83 16H8Z'/%3E%3C/svg%3E");
+}
+
+
+
+/* Style the color picker container */
+input[type="color"] {
+  /* Remove border */
+  border: none;
+  /* Remove outline */
+  outline: none;
+  /* Set width and height for visibility */
+  width: 30px;
+  height: 15px;
+  /* Adjust padding and margin if needed */
+  padding: 0;
+  margin: 0;
+  /* Override default styles for WebKit browsers */
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+/* Style the color picker button */
+input[type="color"]::-webkit-color-swatch-wrapper {
+  /* Remove padding */
+  padding: 0;
+}
